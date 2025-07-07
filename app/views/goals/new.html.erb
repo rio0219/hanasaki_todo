@@ -1,0 +1,19 @@
+<h1>目標とタスクの登録</h1>
+
+<%= form_with model: @goal, local: true do |f| %>
+  <div>
+    <%= f.label :title, "目標" %><br>
+    <%= f.text_field :title %>
+  </div>
+
+  <h3>タスク</h3>
+  <ol>
+    <%= f.fields_for :tasks do |task_form| %>
+      <li>
+        <%= task_form.text_field :title, placeholder: "タスク内容を入力" %>
+      </li>
+    <% end %>
+  </ol>
+
+  <%= f.submit "登録" %>
+<% end %>

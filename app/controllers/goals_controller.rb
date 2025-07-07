@@ -13,6 +13,10 @@ class GoalsController < ApplicationController
     end
   end
 
+  def index
+    @goals = Goal.includes(:tasks).all
+  end
+
   private
 
   def goal_params

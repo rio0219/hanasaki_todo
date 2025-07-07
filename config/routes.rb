@@ -7,8 +7,8 @@ Rails.application.routes.draw do
   get 'tasks/edit'
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
   Rails.application.routes.draw do
-    resources :goals, only: [:new, :create]
-    root "goals#new"
+    resources :goals, only: [:index, :new, :create]
+    root "goals#index"
   end
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   # Can be used by load balancers and uptime monitors to verify that the app is live.

@@ -10,6 +10,9 @@
         <li><strong>タスク <%= i + 1 %>:</strong> <%= task.title %></li>
       <% end %>
     </ul>
+    <!-- 編集・削除リンクをここに追加 -->
+    <%= link_to "編集", edit_goal_path(goal) %> 
+    <%= button_to "削除", goal_path(goal), method: :delete, data: { confirm: "本当に削除しますか？" } %>
   </div>
   <hr>
 <% end %>

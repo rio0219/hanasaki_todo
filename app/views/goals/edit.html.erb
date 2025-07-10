@@ -1,0 +1,18 @@
+<%= form_with(model: @goal, local: true) do |f| %>
+  <div>
+    <%= f.label :title, "目標" %>
+    <%= f.text_field :title %>
+  </div>
+
+  <h3>タスク</h3>
+  <%= f.fields_for :tasks do |task_fields| %>
+    <div>
+      <%= task_fields.label :title, "タスク" %>
+      <%= task_fields.text_field :title %>
+      <%= task_fields.check_box :_destroy %>
+      <%= task_fields.label :_destroy, "削除" %>
+    </div>
+  <% end %>
+
+  <%= f.submit "更新する" %>
+<% end %>

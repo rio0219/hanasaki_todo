@@ -17,10 +17,29 @@ class GoalsController < ApplicationController
     @goals = Goal.includes(:tasks).all
   end
 
+  def edit
+    @goal = Goal.find(params[:id])
+  end
+
+  def update
+    @goal = Goal.find(params[:id])
+    if @goal.update(goal_params)
+      redirect_to goals_path, notice: "更新しました"
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    @goal = Goal.find(params[:id])
+    @goal.destroy
+    redirect_to goals_path, notice: "目標を削除しました"
+  end
+
   private
 
   def goal_params
-    params.require(:goal).permit(:title, tasks_attributes: [:title])
+    params.require(:goal).permit(:title, tasks_attributes: [:id, :title, :_destroy])
   end
 end
 

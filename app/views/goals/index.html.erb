@@ -11,8 +11,8 @@
       <% end %>
     </ul>
     <!-- 編集・削除リンクをここに追加 -->
-    <%= link_to "編集", edit_goal_path(goal) %> 
-    <%= button_to "削除", goal_path(goal), method: :delete, data: { confirm: "本当に削除しますか？" } %>
+    <%= link_to "編集", edit_goal_path(goal), class: "as-link-button" %> 
+    <%= button_to "削除", goal_path(goal), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "as-link-button", form: { class: "inline-form" }  %>
   </div>
   <hr>
 <% end %>

@@ -13,3 +13,23 @@
  *= require_tree .
  *= require_self
  */
+ .as-link-button {
+  background: none;
+  border: none;
+  padding: 0;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+  font: inherit;
+}
+
+.goal-actions {
+  display: flex;
+  gap: 10px; /* ボタンの間隔 */
+  align-items: center;
+}
+
+.inline-form {
+  display: inline;
+  margin: 0;
+}

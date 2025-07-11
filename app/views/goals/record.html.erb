@@ -1,0 +1,15 @@
+<% if @goal.present? %>
+  <%= form_with url: record_goal_path(@goal), method: :post do %>
+    <% @records.each_with_index do |record, i| %>
+      <div>
+        <strong>タスク <%= i + 1 %>:</strong> <%= record.task&.title || "不明なタスク" %>
+        <%= hidden_field_tag "records[][task_id]", record.task.id %>
+        <%= check_box_tag "records[][done]", "1", record.done %>
+      </div>
+    <% end %>
+
+    <%= submit_tag "記録を保存" %>
+  <% end %>
+<% else %>
+  <p>目標が見つかりませんでした。</p>
+<% end %>

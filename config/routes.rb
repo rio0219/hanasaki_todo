@@ -1,5 +1,11 @@
 Rails.application.routes.draw do
-  resources :goals, except: [:show]
+  resources :goals, except: [:show] do
+    member do
+      get :record
+      post :record
+    end
+  end
+
   resources :tasks
 
   root "goals#index"

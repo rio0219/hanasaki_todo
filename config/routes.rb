@@ -2,7 +2,7 @@ Rails.application.routes.draw do
   resources :goals, except: [:show] do
     member do
       get :record
-      post :record
+      post :record, action: :record_submit
     end
   end
 

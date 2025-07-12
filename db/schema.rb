@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_11_142438) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_12_150009) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "daily_records", force: :cascade do |t|
+    t.bigint "goal_id", null: false
+    t.date "date"
+    t.integer "count"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["goal_id"], name: "index_daily_records_on_goal_id"
+  end
 
   create_table "goals", force: :cascade do |t|
     t.string "title"
@@ -37,6 +46,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_11_142438) do
     t.index ["goal_id"], name: "index_tasks_on_goal_id"
   end
 
+  add_foreign_key "daily_records", "goals"
   add_foreign_key "task_records", "tasks"
   add_foreign_key "tasks", "goals"
 end

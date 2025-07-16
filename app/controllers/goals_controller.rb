@@ -13,7 +13,7 @@ class GoalsController < ApplicationController
     today = Date.current
   
     records_params = params[:records] || []
-    count = 0
+    count = records_params.count { |r| r[:done] == "1" }
   
     records_params.each do |record_param|
       task_id = record_param[:task_id]
@@ -23,8 +23,6 @@ class GoalsController < ApplicationController
       task_record = TaskRecord.find_or_initialize_by(task: task, date: today)
       task_record.done = done
       task_record.save!
-  
-      count += 1 if done
     end
   
     # DailyRecord を保存
@@ -33,6 +31,12 @@ class GoalsController < ApplicationController
     daily_record.save!
   
     redirect_to goals_path, notice: "記録を保存しました（達成数: #{count}）"
+  end 
+  
+  def records_data
+    goal = Goal.find(params[:id])
+    records = goal.daily_records.order(:date).pluck(:date, :count)
+    render json: records.map { |date, count| { date: date, count: count } }
   end  
  
   def new

@@ -10,10 +10,53 @@
         <li><strong>タスク <%= i + 1 %>:</strong> <%= task.title %></li>
       <% end %>
     </ul>
-    <!-- 編集・削除リンクをここに追加 -->
     <%= link_to "編集", edit_goal_path(goal), class: "as-link-button" %> 
     <%= button_to "削除", goal_path(goal), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "as-link-button", form: { class: "inline-form" }  %>
     <%= link_to "記録する", record_goal_path(goal), data: { turbo: false } %>
+    <canvas id="recordChart-<%= goal.id %>" width="400" height="200"></canvas>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  fetch("<%= records_data_goal_path(goal) %>")
+    .then(response => response.json())
+    .then(data => {
+      const ctx = document.getElementById('recordChart-<%= goal.id %>').getContext('2d');
+      new Chart(ctx, {
+  type: 'line',
+  data: {
+    labels: data.map(d => d.date),  // x軸：日付
+    datasets: [{
+      label: '達成数',
+      data: data.map(d => d.count), // y軸：達成数
+      fill: false,
+      borderColor: 'green'
+    }]
+  },
+  options: {
+    scales: {
+      x: {
+        title: {
+          display: true,
+          text: '日付'
+        }
+      },
+      y: {
+        beginAtZero: true,
+        min: 1,
+        max: 5,
+        ticks: {
+          stepSize: 1  // 1刻みで表示
+        },
+        title: {
+          display: true,
+          text: '達成数'
+        }
+      }
+    }
+  }
+});
+    });
+});
+</script>
   </div>
   <hr>
 <% end %>

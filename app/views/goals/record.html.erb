@@ -1,6 +1,6 @@
 <h1><%= @goal.title %> の記録</h1>
 
-<%= form_with url: record_goal_path(@goal), method: :post do %>
+<%= form_with url: record_goal_path(@goal), method: :post, data: { turbo: false } do |f| %>
   <% @records.each_with_index do |record, i| %>
     <div>
       <strong>タスク <%= i + 1 %>:</strong> <%= record.task.title %>

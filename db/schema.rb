@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_12_150009) do
+ActiveRecord::Schema[7.1].define(version: 2025_07_17_143305) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -27,6 +27,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_12_150009) do
     t.string "title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "streak_count", default: 0, null: false
   end
 
   create_table "task_records", force: :cascade do |t|

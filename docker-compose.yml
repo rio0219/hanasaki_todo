@@ -13,8 +13,7 @@ services:
 
   web:
     build: .
-    user: "${UID}:${GID}" 
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b '0.0.0.0'"
+    command: bash -c "cron -f & bundle exec rails s -b 0.0.0.0"
     volumes:
       - .:/app
     ports:

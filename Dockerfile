@@ -57,17 +57,23 @@ RUN apt-get update -qq && \
       make \
       libpq-dev \
       curl \
+      cron \
       libvips-dev \
+      supervisor \
       postgresql-client && \
     rm -rf /var/lib/apt/lists/*
+
+ # root権限でrootユーザー情報をパスワードファイルに記載
+ RUN echo "root:x:0:0:root:/root:/bin/bash" >> /etc/passwd && \
+ useradd rails --create-home --shell /bin/bash && \
+ mkdir -p db log storage tmp && \
+ chown -R rails:rails db log storage tmp
 
 # Copy built artifacts: gems, application
 COPY --from=build /usr/local/bundle /usr/local/bundle
 COPY --from=build /app /app
 
 # Run and own only the runtime files as a non-root user for security
-RUN useradd rails --create-home --shell /bin/bash && \
-    chown -R rails:rails db log storage tmp
 USER rails:rails
 
 # Entrypoint prepares the database.
@@ -75,6 +81,4 @@ ENTRYPOINT ["/app/bin/docker-entrypoint"]
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD ["./bin/rails", "server"]
-RUN gem install bundler && bundle config set path 'vendor/bundle'
-
+CMD ["bash", "-c", "cron -f & bundle exec rails s -b 0.0.0.0"]

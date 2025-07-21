@@ -24,10 +24,10 @@ document.addEventListener("DOMContentLoaded", function() {
       new Chart(ctx, {
   type: 'line',
   data: {
-    labels: data.map(d => d.date),  // x軸：日付
+    labels: data.dates,  // x軸：日付
     datasets: [{
       label: '達成数',
-      data: data.map(d => d.count), // y軸：達成数
+      data: data.counts, // y軸：達成数
       fill: false,
       borderColor: 'green'
     }]
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function() {
       },
       y: {
         beginAtZero: true,
-        min: 1,
+        min: 0,
         max: 5,
         ticks: {
           stepSize: 1  // 1刻みで表示

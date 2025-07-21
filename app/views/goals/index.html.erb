@@ -13,6 +13,7 @@
     <%= link_to "編集", edit_goal_path(goal), class: "as-link-button" %> 
     <%= button_to "削除", goal_path(goal), method: :delete, data: { confirm: "本当に削除しますか？" }, class: "as-link-button", form: { class: "inline-form" }  %>
     <%= link_to "記録する", record_goal_path(goal), data: { turbo: false } %>
+    <p><%= goal.title %> - 継続日数: <%= goal.streak_count %>日</p>
     <canvas id="recordChart-<%= goal.id %>" width="400" height="200"></canvas>
 <script>
 document.addEventListener("DOMContentLoaded", function() {

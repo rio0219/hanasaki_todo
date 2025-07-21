@@ -35,9 +35,26 @@ class GoalsController < ApplicationController
   
   def records_data
     goal = Goal.find(params[:id])
-    records = goal.daily_records.order(:date).pluck(:date, :count)
-    render json: records.map { |date, count| { date: date, count: count } }
-  end  
+  
+    # 日付範囲：最初の記録日から今日まで（なければ今日のみ）
+    start_date = goal.daily_records.minimum(:date) || Date.current
+    end_date = Date.current
+  
+    # 日付ごとに初期化（全部0）
+    date_range = (start_date..end_date).to_a
+    records_hash = date_range.index_with { 0 }
+  
+    # 実データで上書き
+    goal.daily_records.pluck(:date, :count).each do |date, count|
+      records_hash[date] = count
+    end
+  
+    # 日付と達成数の配列で返す
+    render json: {
+      dates: records_hash.keys,
+      counts: records_hash.values
+    }
+  end 
  
   def new
     @goal = Goal.new

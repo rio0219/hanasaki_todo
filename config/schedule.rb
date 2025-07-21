@@ -21,5 +21,6 @@
 
 # config/schedule.rb
 every 1.day, at: '0:00 am' do
+  runner "Goal.record_zero_for_unchecked_goals"
   runner "Goal.update_streak_counts"
 end

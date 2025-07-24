@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   resources :goals, except: [:show] do
     member do
       get :record

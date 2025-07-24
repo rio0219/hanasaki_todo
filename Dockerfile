@@ -82,3 +82,8 @@ ENTRYPOINT ["/app/bin/docker-entrypoint"]
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
 CMD ["bash", "-c", "cron -f & bundle exec rails s -b 0.0.0.0"]
+
+USER root
+RUN mkdir -p /var/run && chmod 777 /var/run
+
+RUN rm -f /app/tmp/pids/server.pid

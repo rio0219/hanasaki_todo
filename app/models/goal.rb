@@ -1,6 +1,7 @@
 class Goal < ApplicationRecord
+  belongs_to :user
   has_many :tasks, dependent: :destroy
-  has_many :daily_records
+  has_many :daily_records, dependent: :destroy
   accepts_nested_attributes_for :tasks, allow_destroy: true, reject_if: :all_blank
   def self.update_streak_counts
     all.find_each do |goal|

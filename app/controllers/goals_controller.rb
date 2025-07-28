@@ -72,6 +72,13 @@ class GoalsController < ApplicationController
 
   def index
     @goals = Goal.includes(:tasks).all
+    @goals = current_user.goals.includes(:daily_records)
+
+  @ranking = Goal
+    .joins(:daily_records, :user)
+    .select('goals.id, goals.name as goal_name, users.name as user_name, SUM(daily_records.count) as total_count')
+    .group('goals.id, users.name')
+    .order('total_count DESC')
   end
 
   def edit

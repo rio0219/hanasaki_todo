@@ -60,4 +60,25 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
   </div>
   <hr>
+  <h2>継続日数ランキング</h2>
+<table>
+  <thead>
+    <tr>
+      <th>順位</th>
+      <th>ユーザー名</th>
+      <th>目標名</th>
+      <th>継続日数合計</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @ranking.each_with_index do |record, index| %>
+      <tr>
+        <td><%= index + 1 %></td>
+        <td><%= record.user_name %></td>
+        <td><%= record.goal_name %></td>
+        <td><%= record.total_count %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
 <% end %>

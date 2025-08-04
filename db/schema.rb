@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_07_24_124615) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_04_135900) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -28,6 +28,8 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_24_124615) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "streak_count", default: 0, null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_goals_on_user_id"
   end
 
   create_table "task_records", force: :cascade do |t|
@@ -60,6 +62,7 @@ ActiveRecord::Schema[7.1].define(version: 2025_07_24_124615) do
   end
 
   add_foreign_key "daily_records", "goals"
+  add_foreign_key "goals", "users"
   add_foreign_key "task_records", "tasks"
   add_foreign_key "tasks", "goals"
 end

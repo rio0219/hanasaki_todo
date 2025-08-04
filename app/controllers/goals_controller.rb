@@ -1,4 +1,5 @@
 class GoalsController < ApplicationController
+  before_action :authenticate_user!
   def record
     @goal = Goal.includes(:tasks).find(params[:id])
     @today = Date.current
@@ -62,7 +63,7 @@ class GoalsController < ApplicationController
   end
 
   def create
-    @goal = Goal.new(goal_params)
+    @goal = current_user.goals.build(goal_params)
     if @goal.save
       redirect_to root_path, notice: "目標とタスクを登録しました"
     else
@@ -72,7 +73,7 @@ class GoalsController < ApplicationController
 
   def index
     @goals = Goal.includes(:tasks).all
-    @goals = current_user.goals.includes(:daily_records)
+    @goals = current_user.goals.includes(:daily_records, :tasks)
 
   @ranking = Goal
     .joins(:daily_records, :user)

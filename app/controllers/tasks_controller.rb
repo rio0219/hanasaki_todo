@@ -46,4 +46,14 @@ class TasksController < ApplicationController
   def task_params
     params.require(:task).permit(:title)
   end
+
+  def check_and_grant_flowers(user)
+    Flower.all.each do |flower|
+      next if user.flowers.include?(flower) # 既に持っている
+  
+      if user.total_achievements >= flower.required_count
+        user.flowers << flower
+      end
+    end
+  end
 end

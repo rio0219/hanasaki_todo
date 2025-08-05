@@ -7,3 +7,6 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+Flower.create(name: 'チューリップ', rarity: 'common', image: 'tulip.png', required_count: 5)
+Flower.create(name: 'バラ', rarity: 'rare', image: 'rose.png', required_count: 15)
+Flower.create(name: 'ひまわり', rarity: 'epic', image: 'sunflower.png', required_count: 30)

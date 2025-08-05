@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_08_05_115855) do
+ActiveRecord::Schema[7.1].define(version: 2025_08_05_125045) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_05_115855) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["goal_id"], name: "index_daily_records_on_goal_id"
+  end
+
+  create_table "flowers", force: :cascade do |t|
+    t.string "name"
+    t.string "rarity"
+    t.string "image"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.integer "required_count"
   end
 
   create_table "goals", force: :cascade do |t|
@@ -49,6 +58,15 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_05_115855) do
     t.index ["goal_id"], name: "index_tasks_on_goal_id"
   end
 
+  create_table "user_flowers", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "flower_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["flower_id"], name: "index_user_flowers_on_flower_id"
+    t.index ["user_id"], name: "index_user_flowers_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -66,4 +84,6 @@ ActiveRecord::Schema[7.1].define(version: 2025_08_05_115855) do
   add_foreign_key "goals", "users"
   add_foreign_key "task_records", "tasks"
   add_foreign_key "tasks", "goals"
+  add_foreign_key "user_flowers", "flowers"
+  add_foreign_key "user_flowers", "users"
 end

@@ -15,52 +15,54 @@
     <%= link_to "記録する", record_goal_path(goal), data: { turbo: false } %>
     <p><%= goal.title %> - 継続日数: <%= goal.streak_count %>日</p>
     <canvas id="recordChart-<%= goal.id %>" width="400" height="200"></canvas>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  fetch("<%= records_data_goal_path(goal) %>")
-    .then(response => response.json())
-    .then(data => {
-      const ctx = document.getElementById('recordChart-<%= goal.id %>').getContext('2d');
-      new Chart(ctx, {
-  type: 'line',
-  data: {
-    labels: data.dates,  // x軸：日付
-    datasets: [{
-      label: '達成数',
-      data: data.counts, // y軸：達成数
-      fill: false,
-      borderColor: 'green'
-    }]
-  },
-  options: {
-    scales: {
-      x: {
-        title: {
-          display: true,
-          text: '日付'
-        }
-      },
-      y: {
-        beginAtZero: true,
-        min: 0,
-        max: 5,
-        ticks: {
-          stepSize: 1  // 1刻みで表示
-        },
-        title: {
-          display: true,
-          text: '達成数'
-        }
-      }
-    }
-  }
-});
-    });
-});
-</script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        fetch("<%= records_data_goal_path(goal) %>")
+          .then(response => response.json())
+          .then(data => {
+            const ctx = document.getElementById('recordChart-<%= goal.id %>').getContext('2d');
+            new Chart(ctx, {
+              type: 'line',
+              data: {
+                labels: data.dates,
+                datasets: [{
+                  label: '達成数',
+                  data: data.counts,
+                  fill: false,
+                  borderColor: 'green'
+                }]
+              },
+              options: {
+                scales: {
+                  x: {
+                    title: {
+                      display: true,
+                      text: '日付'
+                    }
+                  },
+                  y: {
+                    beginAtZero: true,
+                    min: 0,
+                    max: 5,
+                    ticks: {
+                      stepSize: 1
+                    },
+                    title: {
+                      display: true,
+                      text: '達成数'
+                    }
+                  }
+                }
+              }
+            });
+          });
+      });
+    </script>
   </div>
   <hr>
-  <h2>継続日数ランキング</h2>
+<% end %> 
+
+<h2>継続日数ランキング</h2>
 <table>
   <thead>
     <tr>
@@ -76,9 +78,8 @@ document.addEventListener("DOMContentLoaded", function() {
         <td><%= index + 1 %></td>
         <td><%= record.user_name %></td>
         <td><%= record.goal_name %></td>
-        <td><%= record.total_count %></td>
+        <td><%= record.total_count %>日</td>
       </tr>
     <% end %>
   </tbody>
 </table>
-<% end %>

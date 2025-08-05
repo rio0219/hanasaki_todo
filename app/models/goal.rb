@@ -18,7 +18,6 @@ class Goal < ApplicationRecord
     today = Date.current
     all.find_each do |goal|
       next if goal.daily_records.where(date: today).exists?
-
       goal.daily_records.create!(date: today, count: 0)
     end
   end

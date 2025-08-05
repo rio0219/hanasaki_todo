@@ -63,6 +63,7 @@ class GoalsController < ApplicationController
   end
 
   def create
+    p "goal_params: #{goal_params.inspect}"
     @goal = current_user.goals.build(goal_params)
     if @goal.save
       redirect_to root_path, notice: "目標とタスクを登録しました"
@@ -77,7 +78,7 @@ class GoalsController < ApplicationController
 
   @ranking = Goal
     .joins(:daily_records, :user)
-    .select('goals.id, goals.name as goal_name, users.name as user_name, SUM(daily_records.count) as total_count')
+    .select('goals.id, goals.title as goal_name, users.name as user_name, SUM(daily_records.count) as total_count')
     .group('goals.id, users.name')
     .order('total_count DESC')
   end

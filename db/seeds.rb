@@ -7,6 +7,15 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
-Flower.create(name: 'チューリップ', rarity: 'common', image: 'tulip.png', required_count: 5)
-Flower.create(name: 'バラ', rarity: 'rare', image: 'rose.png', required_count: 15)
-Flower.create(name: 'ひまわり', rarity: 'epic', image: 'sunflower.png', required_count: 30)
+flowers = [
+  { name: 'チューリップ', rarity: '1', image: 'tulip.png', required_count: 1 },
+  { name: 'ヒマワリ', rarity: '2', image: 'sunflower.png', required_count: 2 },
+  { name: 'バラ', rarity: '3', image: 'rose.png', required_count: 3 },
+  { name: 'ラン', rarity: '4', image: 'orchid.png', required_count: 4 },
+  { name: 'サクラ', rarity: '5', image: 'sakura.png', required_count: 5 }
+]
+
+flowers.each do |attrs|
+  flower = Flower.find_or_initialize_by(name: attrs[:name])
+  flower.update!(attrs) # 既存なら上書き
+end

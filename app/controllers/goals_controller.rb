@@ -31,8 +31,17 @@ class GoalsController < ApplicationController
     daily_record.count = count
     daily_record.save!
   
-    redirect_to goals_path, notice: "記録を保存しました（達成数: #{count}）"
-  end 
+    # 花付与処理 
+    flower = Flower.where(required_count: count).sample
+    if flower
+      UserFlower.create!(user: current_user, flower: flower)
+      flash[:notice] = "記録を保存しました（達成数: #{count}）\n#{flower.name} を獲得しました！"
+    else
+      flash[:notice] = "記録を保存しました（達成数: #{count}）"
+    end
+  
+    redirect_to goals_path
+  end
   
   def records_data
     goal = Goal.find(params[:id])

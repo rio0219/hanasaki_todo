@@ -1,0 +1,9 @@
+<h1>あなたの花コレクション</h1>
+
+<ul>
+  <% @user_flowers.each do |uf| %>
+    <li>
+      <%= uf.flower.name %>（レア度: <%= uf.flower.rarity %>）
+    </li>
+  <% end %>
+</ul>

@@ -9,8 +9,7 @@ Rails.application.routes.draw do
   end
 
   resources :tasks
-
+  resources :user_flowers, only: [:index]
   root "goals#index"
-
   get "up" => "rails/health#show", as: :rails_health_check
 end
